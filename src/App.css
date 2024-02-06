@@ -1,3 +1,22 @@
+.heart{
+  height: 200px;
+  width: 200px;
+  background-color: red;
+  transform : rotate(45deg);
+  position: relative;
+}
+
+.heart::before,.heart::after{
+  height: 200px;
+  width: 200px;
+  background-color: red;
+  position: absolute;
+}
+.container{
+  display: flex;
+  justify-content : space-around;
+}
+
 .App {
   text-align: center;
 }
