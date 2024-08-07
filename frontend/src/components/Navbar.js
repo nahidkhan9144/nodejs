@@ -1,6 +1,5 @@
 import React from 'react'
 // import PropTypes  from 'prop-types'
-import Form from './Form';
 import { useNavigate } from 'react-router-dom';
 export default function Navbar(props) {
   const navigate = useNavigate();
@@ -41,16 +40,13 @@ export default function Navbar(props) {
             </ul>
             <div class={`form-check form-switch text-${props.mode=='light' ?'dark':'light'}`}>
           <input className="form-check-input" onClick={props.toggleMode} type="checkbox" id="flexSwitchCheckChecked"/>
-          <label className="form-check-label" htmlFor="flexSwitchCheckChecked">Checked switch checkbox input</label>
+          <label className="form-check-label" htmlFor="flexSwitchCheckChecked">Dark Mode</label>
         </div>
-            <form className="d-flex">
-              <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-              <button className="btn btn-outline-success" type="submit" >Search</button>
-            </form>
+            
           </div>
         </div>
       </nav>
-      <Form heading="hello nahid" buttonClickHandler={handleButtonClick}  mode={props.mode} showAlert={props.showAlert} toggleMode={props.toggleMode} />
+      
     </>
   )
 }
