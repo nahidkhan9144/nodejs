@@ -20,11 +20,21 @@ export default function Home(props) {
   const newsbtn = ()=>{
     navigate('/viewNews');
   }
+
+  const mailValid=()=>{
+    
+  }
   
+  const viewTable=()=>{
+    navigate('/viewTable')
+  }
+
   return (
     <>
     <button type="submit" className="btn btn-warning mx-3 my-3 mb-3" onClick={handleLogout}>Logout</button>
     <button type="submit" className="btn btn-warning mx-3 my-3 mb-3" onClick={newsbtn}>GO To News</button>
+    <button type="submit" className="btn btn-primary mx-3 my-3 mb-3" onClick={mailValid}>Validate Email</button>
+    <button type="submit" className="btn btn-primary mx-3 my-3 mb-3" onClick={viewTable}>View Table</button>
     <Form heading="hello nahid" buttonClickHandler={handleButtonClick}  mode={props.mode} showAlert={props.showAlert} toggleMode={props.toggleMode} />
  </>
   )

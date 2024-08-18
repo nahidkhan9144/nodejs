@@ -8,7 +8,7 @@ export default function News() {
     };
     const [cardD, cardData] = useState([]);
     useEffect(() => {
-        fetch('https://newsapi.org/v2/everything?q=tesla&from=2024-07-11&sortBy=publishedAt&apiKey=718c6e55d3694b9bae9cdc2014ba0407').then((res) => {
+        fetch('https://newsapi.org/v2/everything?q=tesla&from=2024-07-15&sortBy=publishedAt&apiKey=718c6e55d3694b9bae9cdc2014ba0407').then((res) => {
             return res.json();
         }).then((data) => {
             cardData(data.articles);
