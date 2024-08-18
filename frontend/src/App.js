@@ -6,6 +6,7 @@ import Home from "./components/Home";
 import News from "./components/News";
 import Alert from "./components/Alert";
 import Navbar from "./components/Navbar";
+import ViewTable from "./components/ViewTable";
 
 function App() {
   const [title, updateTitle] = useState(null);
@@ -52,6 +53,7 @@ function App() {
           <Route path="/" element={<Signin showError={showAlert} updateTitle={updateTitle} />} />
           <Route path="/homeGo" element={<Home showAlert={showAlert} mode={mode}/>} />
           <Route path="/viewNews" element={<News showError={updateErrorMessage} updateTitle={updateTitle} />} />
+          <Route path="/viewTable" element={<ViewTable showAlert={showAlert} mode={mode} showError={updateErrorMessage} updateTitle={updateTitle} />} />
         </Routes>
       </div>
     </BrowserRouter>

@@ -16,6 +16,13 @@ const db = mysql.createConnection({
   database: "register"
 });
 
+const laravelDb = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "",
+  database: "laravel"
+});
+
 db.connect((err) => {
   if (err) {
       console.error('Error connecting to the database:', err);
@@ -27,19 +34,15 @@ db.connect((err) => {
 // Login route
 app.post('/user/register', (req, res) => {
   const { email, password } = req.body;
-
-  // Validate request data
   if (!email || !password) {
       return res.status(400).json({ error: 'Email and password are required' });
   }
-
   const query = "SELECT * FROM `fnew` WHERE `name` = ? AND `pass` = ?";
   db.query(query, [email, password], (err, result) => {
       if (err) {
           console.error('Database query error:', err);
           return res.status(500).json({ error: 'Database query error' });
       }
-
       if (result.length > 0) {
           const token = jwt.sign({ email: email }, process.env.JWT_SECRET, { expiresIn: "1800s" });
           return res.status(200).json({ message: "User Logged in Successfully", token });
@@ -49,37 +52,34 @@ app.post('/user/register', (req, res) => {
   });
 });
 
+app.get('/deleteRow', (req, res) => { 
+  const id = req.body.id; // req.body is used in POST requests
+  const deleteQuery = 'UPDATE `cities` SET `park` = 1 WHERE `id`=?';
 
-  // db.query("SELECT * FROM `fnew` WHERE `name` = ? AND `pass` = ?", [req.body.email, req.body.password])
-  //   .then(query => {
-  //     console.log(query.sql);
-  //     return res.json(query.sql);
-  //   })
-  //   .catch(error => {
-  //     console.error(error);
-  //     return res.json(error);
-  //   });
-  // const sqlQuery = "SELECT * FROM `fnew` WHERE `name` = ? AND `pass` = ?";
-  // const values = [
-  //   req.body.email,
-  //   req.body.password
-  // ]
-  // // console.log(db.query(sqlQuery,[values]));
-  // db.query(sqlQuery, [values], (err, data) => {
-  //   if (err) return res.json("Login Faield");
-  //   const accessToken = {
-  //     email: req.body.email,
-  //     pass: req.body.password,
-  //   }
-  //   jwt.sign({ accessToken: data }, 'nahidkhan9144@', (err, token) => {
-  //     // res.json({
-  //     //   ,
-  //     // })
-  //   })
-    // return res.json(token, data);
-  // })
-  // res.status(200).send({ message: 'Hello World! /user/register' });
-// });
+  laravelDb.query(deleteQuery, [id], (err, result) => {
+    if (err) {
+      console.error("query error or no data found");
+      return res.json({ error: '1', data: "query error or no data found" }); // Error code should be '1' for error
+    }
+    if (result) {
+      return res.json({ error: '0', data: 'successfully Deleted' });
+    }
+  });
+});
+
+
+app.get('/getTable',(req,res)=>{ // to get all the table data
+  laravelDb.query('SELECT * FROM `cities` WHERE `park` = 0',(err,result)=>{
+    if(err){
+      console.error("query error or no data found");
+      res.json({error:'0',data:"query error or no data found"})
+    }
+    if(result.length>0){
+      return res.json({error:'0',data:result});
+    }
+  })
+});
+
 
 app.get('/', (req, res) => {
   console.log(req);
