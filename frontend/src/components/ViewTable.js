@@ -1,29 +1,34 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
+import { Modal } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 export default function ViewTable(props) {
     const [data, getData] = useState([]);
     const [deleteId, id] = useState('');
+    const [show, showModal] = React.useState(false);
     const getTableData = () => {
-            axios.get('http://localhost:8000/getTable')
-                .then(function (response) {
-                    if (response.data.error == 0) {
-                        getData(response.data.data);
-                        // console.log(response.data.data);
-                    } else {
-                        props.showAlert(response.data.data);
-                        // console.log(response.data.data); 
-                    }
-                })
-                .catch(function (error) {
-                    console.error("There was an error fetching the data!", error);
-                });
+        axios.get('http://localhost:8000/getTable')
+            .then(function (response) {
+                if (response.data.error == 0) {
+                    getData(response.data.data);
+                    // console.log(response.data.data);
+                } else {
+                    props.showAlert(response.data.data);
+                    // console.log(response.data.data); 
+                }
+            })
+            .catch(function (error) {
+                console.error("There was an error fetching the data!", error);
+            });
     }
     useEffect(() => {
         getTableData();
-    }, []); 
+    }, []);
     const editBtn = () => {
-
+        showModal(true);
+    }
+    const handleClose = () => {
+        showModal(false);
     }
 
     const deleteBtn = (id) => {
@@ -54,7 +59,7 @@ export default function ViewTable(props) {
                         {
                             data.map((item, index) => (
                                 <tr key={index}>
-                                    <td scope="row">{index+1}</td>
+                                    <td scope="row">{index + 1}</td>
                                     <td>{item.name}</td>
                                     <td>{item.city}</td>
                                     <td>{item.email}</td>
@@ -69,6 +74,16 @@ export default function ViewTable(props) {
                     </tbody>
                 </table>
             </div>
+
+            <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Test</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <h3>Test!</h3>
+                </Modal.Body>
+            </Modal>
+
         </>
     );
 }
