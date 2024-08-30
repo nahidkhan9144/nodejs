@@ -52,7 +52,7 @@ app.post('/user/register', (req, res) => {
   });
 });
 
-app.get('/deleteRow', (req, res) => { 
+app.post('/deleteRow', (req, res) => { 
   const id = req.body.id; // req.body is used in POST requests
   const deleteQuery = 'UPDATE `cities` SET `park` = 1 WHERE `id`=?';
 
