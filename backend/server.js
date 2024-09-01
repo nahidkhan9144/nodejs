@@ -67,6 +67,18 @@ app.post('/deleteRow', (req, res) => {
   });
 });
 
+app.post('/updateRow', (req, res) => {
+  const updateQuery = 'UPDATE `cities` SET `name` = ?, `city` = ? WHERE `id` = ?';
+  laravelDb.query(updateQuery, [req.body.name, req.body.city, req.body.id], (err, result) => {
+    if (err) {
+      return res.json({ error: '1', data: "Query error or data not found" });
+    } else {
+      return res.json({ error: '0', data: "Successfully updated" });
+    }
+  });
+});
+
+
 
 app.get('/getTable',(req,res)=>{ // to get all the table data
   laravelDb.query('SELECT * FROM `cities` WHERE `park` = 0',(err,result)=>{

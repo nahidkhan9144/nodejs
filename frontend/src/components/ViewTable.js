@@ -6,6 +6,11 @@ export default function ViewTable(props) {
     const [data, getData] = useState([]);
     const [deleteId, id] = useState('');
     const [show, showModal] = React.useState(false);
+    const [state, setState] = useState({
+        city: '',
+        fullname: '',
+        id : ''
+    })
     const getTableData = () => {
         axios.get('http://localhost:8000/getTable')
             .then(function (response) {
@@ -24,9 +29,20 @@ export default function ViewTable(props) {
     useEffect(() => {
         getTableData();
     }, []);
-    const editBtn = () => {
-        showModal(true);
-    }
+
+
+    const editBtn = (id) => {
+        const selectedItem = data.find(item => item.id === id);
+        if (selectedItem) {
+            setState({
+                fullname: selectedItem.name,
+                city: selectedItem.city,
+                id: selectedItem.id,
+            });
+            showModal(true);
+        }
+    };
+
     const handleClose = () => {
         showModal(false);
     }
@@ -40,6 +56,42 @@ export default function ViewTable(props) {
         })
 
     }
+
+    const updateApiCall = () => {
+        var payload = {
+            name: state.fullname,
+            city: state.city,
+            id: state.id,
+        };
+        axios.post('http://localhost:8000/updateRow', payload) // Removed the extra object wrapping
+            .then(function (response) {
+                if (response.data.error == 0) {
+                    props.showAlert('Successfully updated');
+                    showModal(false);
+                    getTableData();
+                }
+            })
+            .catch(function (error) {
+                console.error("There was an error updating the data!", error);
+            });
+    };
+    
+    const updateBtn = (e) => {
+        e.preventDefault();
+        if (state.city == '' || state.fullname == '') {
+            props.showAlert('Fill Fields');
+        } else {
+            updateApiCall();
+        }
+    }
+
+    const handleChange = (e) => {
+        const { id, value } = e.target;
+        setState((prevState) => ({
+            ...prevState,
+            [id]: value
+        }));
+    };
 
     return (
         <>
@@ -75,12 +127,37 @@ export default function ViewTable(props) {
                 </table>
             </div>
 
-            <Modal show={show} onHide={handleClose}>
+            <Modal show={show} onHide={handleClose} static>
                 <Modal.Header closeButton>
                     <Modal.Title>Test</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <h3>Test!</h3>
+                <div className="form-group">
+                <label for="full_name">Name</label>
+                    <input
+                        type="text"
+                        className="form-control"
+                        id="fullname" // Change to match the key in state
+                        placeholder="Enter FullName"
+                        value={state.fullname}
+                        onChange={handleChange}
+                    />
+                    </div>
+                    <div className="form-group" >
+                        <label for="city">City</label>
+                    <input
+                        type="text"
+                        className="form-control"
+                        id="city"
+                        placeholder="Enter City"
+                        value={state.city}
+                        onChange={handleChange}
+                    />
+                    </div>
+
+
+                    <button className="btn btn-primary my-3 float-end" onClick={updateBtn} type="submit">Update</button>
+
                 </Modal.Body>
             </Modal>
 
