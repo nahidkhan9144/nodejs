@@ -1,13 +1,12 @@
+import React, { useState } from 'react';
 import { BrowserRouter, Routes, Route,useLocation } from "react-router-dom";
 import Signin from "./components/Signin";
 import './App.css';
-import React, { useState } from 'react';
 import Home from "./components/Home";
 import News from "./components/News";
 import Alert from "./components/Alert";
 import Navbar from "./components/Navbar";
 import ViewTable from "./components/ViewTable";
-
 function App() {
   const [title, updateTitle] = useState(null);
   const [errorMessage, updateErrorMessage] = useState(null);
@@ -40,7 +39,6 @@ function App() {
     <BrowserRouter>
       <div className="App">
         <Alert alert={errorMessage} />
-
         {/* NavbarWrapper will conditionally render Navbar based on the route */}
         <NavbarWrapper
           mode={mode}
