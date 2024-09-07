@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import useCheckToken from './useCheckToken';
 import Clock from 'react-live-clock';
 import Form from './Form';
+import {motion} from 'framer-motion';
 export default function Home(props) {
   let navigate = useNavigate();
   const handleButtonClick = () => {
@@ -34,7 +35,24 @@ export default function Home(props) {
       <div className="container">
         <div className="row">
           <div className="col-md-12 mx-5 d-flex justify-content-end">
-            <Clock format={'hh :mm :ss A'} ticking={true} timezone={'Asia/Kolkata'} />
+          <motion.div
+            whileHover={{
+              scale: 1.2,
+              borderColor: '#808080', // Grey border on hover
+              color: '#000000' // Change text color on hover
+            }}
+            whileTap={{ scale: 0.8 }}
+            transition={{ duration: 0.3 }}
+            
+            style={{
+              border: '2px solid #ff5722', // Border color and width
+              borderRadius: '10px', // Rounded corners (optional)
+              padding: '10px', // Padding inside the border (optional)
+              backgroundColor: '#fff', // Background color
+            }}
+          >
+            <Clock format={'hh:mm:ss A'} ticking={true} timezone={'Asia/Kolkata'} />
+          </motion.div>
           </div>
         </div>
       </div>
