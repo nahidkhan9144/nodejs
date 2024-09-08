@@ -9,7 +9,7 @@ export default function ViewTable(props) {
     const [state, setState] = useState({
         city: '',
         fullname: '',
-        id : ''
+        id: ''
     })
     const getTableData = () => {
         axios.get('http://localhost:8000/getTable')
@@ -75,7 +75,7 @@ export default function ViewTable(props) {
                 console.error("There was an error updating the data!", error);
             });
     };
-    
+
     const updateBtn = (e) => {
         e.preventDefault();
         if (state.city == '' || state.fullname == '') {
@@ -92,6 +92,7 @@ export default function ViewTable(props) {
             [id]: value
         }));
     };
+    const backgroundColor = props.mode === 'dark' ? 'grey' : 'white';
 
     return (
         <>
@@ -127,39 +128,80 @@ export default function ViewTable(props) {
                 </table>
             </div>
 
-            <Modal show={show} onHide={handleClose} static>
-                <Modal.Header closeButton>
+            <Modal show={show} onHide={handleClose}>
+                <Modal.Header
+                    closeButton
+                    style={{
+                        backgroundColor: props.mode === 'dark' ? 'grey' : 'white',
+                        color: props.mode === 'dark' ? 'white' : 'black', // Change text color for better contrast
+                    }}
+                >
                     <Modal.Title>Test</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>
-                <div className="form-group">
-                <label for="full_name">Name</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        id="fullname" // Change to match the key in state
-                        placeholder="Enter FullName"
-                        value={state.fullname}
-                        onChange={handleChange}
-                    />
+
+                <Modal.Body
+                    style={{
+                        backgroundColor: props.mode === 'dark' ? '#2c2c2c' : 'white', // Darker shade for dark mode
+                        color: props.mode === 'dark' ? 'white' : 'black',
+                    }}
+                >
+                    <div
+                        className="form-group"
+                        style={{
+                            backgroundColor: props.mode === 'dark' ? '#2c2c2c' : 'white',
+                            color: props.mode === 'dark' ? 'white' : 'black',
+                        }}
+                    >
+                        <label htmlFor="fullname">Name</label>
+                        <input
+                            type="text"
+                            className="form-control"
+                            id="fullname"
+                            placeholder="Enter Full Name"
+                            value={state.fullname}
+                            onChange={handleChange}
+                            style={{
+                                backgroundColor: props.mode === 'dark' ? '#1a1a1a' : 'white',
+                                color: props.mode === 'dark' ? 'white' : 'black',
+                                border: props.mode === 'dark' ? '1px solid grey' : '1px solid #ced4da', // Change border color as well
+                            }}
+                        />
                     </div>
-                    <div className="form-group" >
-                        <label for="city">City</label>
-                    <input
-                        type="text"
-                        className="form-control"
-                        id="city"
-                        placeholder="Enter City"
-                        value={state.city}
-                        onChange={handleChange}
-                    />
+
+                    <div
+                        className="form-group"
+                        style={{
+                            backgroundColor: props.mode === 'dark' ? '#2c2c2c' : 'white',
+                            color: props.mode === 'dark' ? 'white' : 'black',
+                        }}
+                    >
+                        <label htmlFor="city">City</label>
+                        <input
+                            type="text"
+                            className="form-control"
+                            id="city"
+                            placeholder="Enter City"
+                            value={state.city}
+                            onChange={handleChange}
+                            style={{
+                                backgroundColor: props.mode === 'dark' ? '#1a1a1a' : 'white',
+                                color: props.mode === 'dark' ? 'white' : 'black',
+                                border: props.mode === 'dark' ? '1px solid grey' : '1px solid #ced4da',
+                            }}
+                        />
                     </div>
 
-
-                    <button className="btn btn-primary my-3 float-end" onClick={updateBtn} type="submit">Update</button>
-
+                    <button
+                        className="btn btn-primary my-3 float-end"
+                        onClick={updateBtn}
+                        type="submit"
+                    >
+                        Update
+                    </button>
                 </Modal.Body>
             </Modal>
+
+
 
         </>
     );
