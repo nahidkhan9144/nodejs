@@ -1,17 +1,28 @@
-import React, { useState } from 'react';
-import { BrowserRouter, Routes, Route,useLocation } from "react-router-dom";
+import React, { useState, CSSProperties  } from 'react';
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import Signin from "./components/Signin";
 import './App.css';
 import Home from "./components/Home";
+
+import ClipLoader from "react-spinners/ClipLoader";
 import News from "./components/News";
 import Alert from "./components/Alert";
 import Navbar from "./components/Navbar";
 import ViewTable from "./components/ViewTable";
 function App() {
+  const override: CSSProperties = {
+    display: "block",
+    margin: "0 auto",
+    borderColor: "red",
+  };
+  
   const [title, updateTitle] = useState(null);
   const [errorMessage, updateErrorMessage] = useState(null);
   const [mode, setMode] = useState('light');
   const [alert, setAlert] = useState(null);
+  let [loading, setLoading] = useState(true);
+  
+  let [color, setColor] = useState("#ffffff");
 
   const toggleMode = () => {
     if (mode === 'light') {
@@ -46,11 +57,20 @@ function App() {
           showAlert={showAlert}
           toggleMode={toggleMode}
         />
+        {/* <button onClick={() => setLoading(!loading)}>Toggle Loader</button> */}
+        <ClipLoader
+          color={color}
+          loading={loading}
+          cssOverride={override}
+          size={150}
+          aria-label="Loading Spinner"
+          data-testid="loader"
+        />
 
         <Routes>
           <Route path="/" element={<Signin showError={showAlert} updateTitle={updateTitle} />} />
-          <Route path="/homeGo" element={<Home showAlert={showAlert} mode={mode}/>} />
-          <Route path="/viewNews" element={<News showError={updateErrorMessage} updateTitle={updateTitle} />} />
+          <Route path="/homeGo" element={<Home showAlert={showAlert} mode={mode} setLoading={setLoading}/>} />
+          <Route path="/viewNews" element={<News showError={updateErrorMessage} updateTitle={updateTitle} setLoading={setLoading} />} />
           <Route path="/viewTable" element={<ViewTable showAlert={showAlert} mode={mode} showError={updateErrorMessage} updateTitle={updateTitle} />} />
         </Routes>
       </div>

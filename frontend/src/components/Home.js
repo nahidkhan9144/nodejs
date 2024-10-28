@@ -7,6 +7,7 @@ import Form from './Form';
 import { motion } from 'framer-motion';
 
 export default function Home(props) {
+  props.setLoading(false);
   let navigate = useNavigate();
   const handleButtonClick = () => {
     navigate('/viewNews');
