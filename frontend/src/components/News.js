@@ -1,7 +1,7 @@
 import { React, useEffect, useState } from 'react'
 import useCheckToken from './useCheckToken';
 
-export default function News() {
+export default function News(props) {
     useCheckToken();
     const styleReact = {
         width: '18rem'
@@ -33,7 +33,7 @@ export default function News() {
                     ))
                 ) : (
                     // <p>Loading...</p>
-                    <BeatLoader/>
+                    props.setLoading(true)
                 )}
             </div>
         
