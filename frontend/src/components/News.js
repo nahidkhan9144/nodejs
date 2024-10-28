@@ -17,7 +17,7 @@ export default function News() {
     return (
         
             <div className="row p-3">
-                {cardD.length > 0 ? (
+                {cardD && cardD.length > 0 ? (
                     cardD.map((article, index) => (
                         <div className='col-md-4' key={index}>
 
@@ -32,7 +32,8 @@ export default function News() {
                         </div>
                     ))
                 ) : (
-                    <p>Loading...</p>
+                    // <p>Loading...</p>
+                    <BeatLoader/>
                 )}
             </div>
         
