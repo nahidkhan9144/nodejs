@@ -4,6 +4,7 @@ import { Modal } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 export default function ViewTable(props) {
     const [data, getData] = useState([]);
+    props.setLoading(false);
     const [deleteId, id] = useState('');
     const [show, showModal] = React.useState(false);
     const [state, setState] = useState({

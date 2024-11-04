@@ -68,10 +68,10 @@ function App() {
         />
 
         <Routes>
-          <Route path="/" element={<Signin showError={showAlert} updateTitle={updateTitle} />} />
+          <Route path="/" element={<Signin showError={showAlert} updateTitle={updateTitle} setLoading={setLoading}/>} />
           <Route path="/homeGo" element={<Home showAlert={showAlert} mode={mode} setLoading={setLoading}/>} />
           <Route path="/viewNews" element={<News showError={updateErrorMessage} updateTitle={updateTitle} setLoading={setLoading} />} />
-          <Route path="/viewTable" element={<ViewTable showAlert={showAlert} mode={mode} showError={updateErrorMessage} updateTitle={updateTitle} />} />
+          <Route path="/viewTable" element={<ViewTable showAlert={showAlert} mode={mode} showError={updateErrorMessage} updateTitle={updateTitle} setLoading={setLoading}/>} />
         </Routes>
       </div>
     </BrowserRouter>

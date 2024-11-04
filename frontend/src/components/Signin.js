@@ -4,6 +4,7 @@ import {ACCESS_TOKEN_NAME} from '../constants/apiConstants';
 import { useNavigate } from "react-router-dom";
 export default function Signin(props) {
   let navigate = useNavigate();
+  props.setLoading(false);
   const style = {
     background: 'linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1))',
     height: '100vh',
@@ -40,6 +41,7 @@ export default function Signin(props) {
         "name": state.userName
       }
       console.log(payload);
+      props.setLoading(true);
       axios.post('http://localhost:8000/user/register', payload)
           .then(function (response) {
               if(response.status === 200){
