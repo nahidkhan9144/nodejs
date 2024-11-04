@@ -1,6 +1,6 @@
 import React from 'react'
 // import PropTypes  from 'prop-types'
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 export default function Navbar(props) {
   const navigate = useNavigate();
   const handleButtonClick = () => {
@@ -16,14 +16,18 @@ export default function Navbar(props) {
           </button>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+            <Link className="nav-link active" aria-current="page" to="/homeGo">
+              Home
+            </Link>
               <li className="nav-item">
-                <a className="nav-link active" aria-current="page" href="/homeGo">Home</a>
+            <Link className="nav-link" aria-current="page" to="/viewNews">
+            News
+            </Link>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="/viewNews">News</a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href="/viewTable">Tables</a>
+            <Link className="nav-link active" aria-current="page" to="/viewTable">
+              Tables
+            </Link>
               </li>
             </ul>
             <div className={`form-check form-switch text-${props.mode=='light' ?'dark':'light'}`}>
