@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
-import { Modal } from 'react-bootstrap';
+import { Modal, Pagination } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 export default function ViewTable(props) {
     const [data, getData] = useState([]);
@@ -94,40 +94,71 @@ export default function ViewTable(props) {
         }));
     };
     const backgroundColor = props.mode === 'dark' ? 'grey' : 'white';
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 5;
+
+    // Calculate total pages
+    const totalPages = Math.ceil(data.length / itemsPerPage);
+
+    // Get current items for the page
+    const currentItems = data.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+
+    // Handle page change
+    const handlePageChange = (page) => {
+        setCurrentPage(page);
+    };
 
     return (
         <>
-            <div className='d-flex col-md-10' style={{ backgroundColor: props.mode === 'dark' ? 'black' : 'white' }} >
-                <table className={`table table-${props.mode}`}>
-                    <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">City</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">Gender</th>
-                            <th scope="col">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            data.map((item, index) => (
-                                <tr key={index}>
-                                    <td scope="row">{index + 1}</td>
-                                    <td>{item.name}</td>
-                                    <td>{item.city}</td>
-                                    <td>{item.email}</td>
-                                    <td>{item.gender}</td>
-                                    <td>
-                                        <button type='submit' className='btn btn-primary' onClick={() => editBtn(item.id)}><i className="fa fa-edit" ></i></button>
-                                        <button type='submit' className='btn btn-warning mx-3' onClick={() => deleteBtn(item.id)}><i className="fa fa-trash"></i></button>
-                                    </td>
-                                </tr>
-                            ))
-                        }
-                    </tbody>
-                </table>
+            <div className='container' style={{ backgroundColor: props.mode === 'dark' ? 'black' : 'white' }}>
+                <div className='d-flex col-md-10'>
+                    <table className={`table table-${props.mode}`}>
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">City</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Gender</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                currentItems.map((item, index) => (
+                                    <tr key={index}>
+                                        <td scope="row">{(currentPage - 1) * itemsPerPage + index + 1}</td>
+                                        <td>{item.name}</td>
+                                        <td>{item.city}</td>
+                                        <td>{item.email}</td>
+                                        <td>{item.gender}</td>
+                                        <td>
+                                            <button type='submit' className='btn btn-primary' onClick={() => editBtn(item.id)}><i className="fa fa-edit" ></i></button>
+                                            <button type='submit' className='btn btn-warning mx-3' onClick={() => deleteBtn(item.id)}><i className="fa fa-trash"></i></button>
+                                        </td>
+                                    </tr>
+                                ))
+                            }
+                        </tbody>
+                    </table>
+                </div>
             </div>
+            <div className="container">
+                <div className="pagination-controls">
+                    <nav>
+                        <ul className="pagination">
+                            {[...Array(totalPages)].map((_, pageIndex) => (
+                                <li key={pageIndex} className={`page-item ${currentPage === pageIndex + 1 ? 'active' : ''}`}>
+                                    <button className="page-link" onClick={() => handlePageChange(pageIndex + 1)}>
+                                        {pageIndex + 1}
+                                    </button>
+                                </li>
+                            ))}
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+
 
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header
