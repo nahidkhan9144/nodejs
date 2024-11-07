@@ -9,13 +9,15 @@ import News from "./components/News";
 import Alert from "./components/Alert";
 import Navbar from "./components/Navbar";
 import ViewTable from "./components/ViewTable";
+import RouterArr from './routesArray/RouteArr';
 function App() {
   const override: CSSProperties = {
     display: "block",
     margin: "0 auto",
     borderColor: "red",
   };
-  
+  // const routeArray = RouterArr;
+  console.log(RouterArr);
   const [title, updateTitle] = useState(null);
   const [errorMessage, updateErrorMessage] = useState(null);
   const [mode, setMode] = useState('light');
@@ -68,6 +70,11 @@ function App() {
         />
 
         <Routes>
+          {RouterArr.map((name)=>{ //for route loop
+            <Route path={name['path']} element={name['component_name'] }>
+              
+            </Route>
+          })}
           <Route path="/" element={<Signin showError={showAlert} updateTitle={updateTitle} setLoading={setLoading}/>} />
           <Route path="/homeGo" element={<Home showAlert={showAlert} mode={mode} setLoading={setLoading}/>} />
           <Route path="/viewNews" element={<News showError={updateErrorMessage} updateTitle={updateTitle} setLoading={setLoading} />} />
