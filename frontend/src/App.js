@@ -16,7 +16,7 @@ function App() {
     margin: "0 auto",
     borderColor: "red",
   };
-  
+  // const routeArray = RouterArr;
   console.log(RouterArr);
   const [title, updateTitle] = useState(null);
   const [errorMessage, updateErrorMessage] = useState(null);
@@ -70,6 +70,11 @@ function App() {
         />
 
         <Routes>
+          {RouterArr.map((name)=>{ //for route loop
+            <Route path={name['path']} element={name['component_name'] }>
+              
+            </Route>
+          })}
           <Route path="/" element={<Signin showError={showAlert} updateTitle={updateTitle} setLoading={setLoading}/>} />
           <Route path="/homeGo" element={<Home showAlert={showAlert} mode={mode} setLoading={setLoading}/>} />
           <Route path="/viewNews" element={<News showError={updateErrorMessage} updateTitle={updateTitle} setLoading={setLoading} />} />
