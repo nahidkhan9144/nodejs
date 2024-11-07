@@ -9,6 +9,7 @@ import News from "./components/News";
 import Alert from "./components/Alert";
 import Navbar from "./components/Navbar";
 import ViewTable from "./components/ViewTable";
+import RouterArr from './routesArray/RouteArr';
 function App() {
   const override: CSSProperties = {
     display: "block",
@@ -16,6 +17,7 @@ function App() {
     borderColor: "red",
   };
   
+  console.log(RouterArr);
   const [title, updateTitle] = useState(null);
   const [errorMessage, updateErrorMessage] = useState(null);
   const [mode, setMode] = useState('light');
