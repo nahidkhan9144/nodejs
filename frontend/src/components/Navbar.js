@@ -16,7 +16,7 @@ export default function Navbar(props) {
           </button>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-            <Link className="nav-link active" aria-current="page" to="/homeGo">
+            <Link className="nav-link active" aria-current="page" to="/Home-Page">
               Home
             </Link>
               <li className="nav-item">

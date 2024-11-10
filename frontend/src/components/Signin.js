@@ -66,8 +66,8 @@ export default function Signin(props) {
   }
   const redirectToHome = () => {
     props.updateTitle('Home')
-    // this.props.history.push('/homeGo');
-    navigate("/homeGo");
+    // this.props.history.push('/Home-Page');
+    navigate("/Home-Page");
 }
 
   const handleSubmitClick = (e) => {

@@ -1,4 +1,4 @@
-import React, { useState, CSSProperties  } from 'react';
+import React, { useState, CSSProperties } from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import Signin from "./components/Signin";
 import './App.css';
@@ -23,7 +23,7 @@ function App() {
   const [mode, setMode] = useState('light');
   const [alert, setAlert] = useState(null);
   let [loading, setLoading] = useState(true);
-  
+
   let [color, setColor] = useState("#ffffff");
 
   const toggleMode = () => {
@@ -47,7 +47,7 @@ function App() {
       setAlert(null);
     }, 1000);
   };
-
+  // debugger;
   return (
     <BrowserRouter>
       <div className="App">
@@ -70,18 +70,20 @@ function App() {
         />
 
         <Routes>
-          {RouterArr.map((name)=>{ //for route loop
-            <Route path={name['path']} element={name['component_name'] }>
-              
-            </Route>
-          })}
-          <Route path="/" element={<Signin showError={showAlert} updateTitle={updateTitle} setLoading={setLoading}/>} />
-          <Route path="/homeGo" element={<Home showAlert={showAlert} mode={mode} setLoading={setLoading}/>} />
+        {RouterArr.map((route) => (
+          <Route
+            key={route.path}
+            path={route.path}
+            element={<route.file showError={updateErrorMessage} mode={mode} updateTitle={updateTitle} setLoading={setLoading}/>}
+          />
+        ))}
+        {/* <Route path="/" element={<Signin showError={showAlert} updateTitle={updateTitle} setLoading={setLoading}/>} />
+          <Route path="/Home-Page" element={<Home showAlert={showAlert} mode={mode} setLoading={setLoading}/>} />
           <Route path="/viewNews" element={<News showError={updateErrorMessage} updateTitle={updateTitle} setLoading={setLoading} />} />
-          <Route path="/viewTable" element={<ViewTable showAlert={showAlert} mode={mode} showError={updateErrorMessage} updateTitle={updateTitle} setLoading={setLoading}/>} />
-        </Routes>
-      </div>
-    </BrowserRouter>
+          <Route path="/viewTable" element={<ViewTable showAlert={showAlert} mode={mode} showError={updateErrorMessage} updateTitle={updateTitle} setLoading={setLoading}/>} /> */}
+      </Routes>
+    </div>
+    </BrowserRouter >
   );
 }
 
